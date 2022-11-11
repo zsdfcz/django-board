@@ -1,0 +1,51 @@
+{% load bootstrap4 %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Board list</title>
+</head>
+
+<body>
+    <div style="text-align: center; margin-top:5em">
+        <a href="{% url 'board:write' %}">글쓰기</a>
+    </div>
+    <div style="padding:0; margin-top:3rem">
+
+        <table class="board" style="width: 100%;">
+            <thead>
+                <tr class="header" style="text-align: center;">
+                    <th>번호</th>
+                    <th>제목</th>
+                    <th>작성일자</th>
+                    <th>수정일자</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% if board_list %}
+                    {% for data in board_list %}
+                    <tr style="text-align: center;">
+                        <td>{{forloop.counter}}</td>
+                        <td>
+                            <a href="{% url 'board:detail' data.id %}">
+                                {{data.title}}
+                            </a>
+                        </td>
+                        <td>{{data.created_at|date:'Y-m-d H:i'}}</td>
+                        <td>{{data.updated_at|date:'Y-m-d H:i'}}</td>
+                        <td><a href="{% url 'board:update' data.id %}">수정</a></td>
+                        <td><a href="{% url 'board:delete' data.id %}">삭제</a></td>
+                    </tr>
+                    {% endfor %}
+                {%endif%}
+            </tbody>
+        </table>
+
+    </div>
+</body>
+
+</html>
